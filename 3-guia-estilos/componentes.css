@@ -1,0 +1,1215 @@
+/* ALCANCE: solo actúa dentro de <body class="av-nuevo">. Las reglas sobre etiquetas usan :where()
+   para no ganar a otros estilos por especificidad. Clases, variables y animaciones llevan av-. */
+
+/* AVESEDARI · COMPONENTES. Requiere tokens.css cargado antes.
+   Los colores, tamaños y radios salen de los tokens. Excepción: la flecha del selector
+   (SVG incrustado) no admite variables y repite el valor de --av-texto. */
+
+/* ======================================================================
+   BASE
+   Caja, cuerpo y títulos. La clase .titulo-N da el aspecto; la etiqueta h1-h6 da
+   la jerarquía. Un solo h1 por página (A-05).
+   ====================================================================== */
+:where(.av-nuevo) *,
+:where(.av-nuevo) *::before,
+:where(.av-nuevo) *::after {
+  box-sizing: border-box;
+}
+body.av-nuevo {
+  margin: 0;
+  font: var(--av-p-normal) var(--av-t-16)/var(--av-l-texto) var(--av-fuente);
+  color: var(--av-texto);
+  background: var(--av-fondo);
+}
+:where(.av-nuevo) img,
+:where(.av-nuevo) svg {
+  max-width: 100%;
+}
+:where(.av-nuevo) h1,
+:where(.av-nuevo) h2,
+:where(.av-nuevo) h3,
+:where(.av-nuevo) h4,
+:where(.av-nuevo) p {
+  margin: 0;
+}
+.av-nuevo .av-titulo-hero,
+.av-nuevo .av-titulo-1,
+.av-nuevo .av-titulo-2,
+.av-nuevo .av-titulo-3 {
+  font-weight: var(--av-p-semi);
+  line-height: var(--av-l-titulo);
+  text-wrap: balance;
+}
+.av-nuevo .av-titulo-hero {
+  font-size: var(--av-t-50);
+}
+.av-nuevo .av-titulo-1 {
+  font-size: var(--av-t-40);
+}
+.av-nuevo .av-titulo-2 {
+  font-size: var(--av-t-32);
+  color: var(--av-texto-titulo);
+}
+.av-nuevo .av-titulo-3 {
+  font-size: var(--av-t-25);
+  line-height: 1.25;
+}
+.av-nuevo .av-titulo-4 {
+  font-size: var(--av-t-20);
+  font-weight: var(--av-p-semi);
+  line-height: 1.3;
+}
+.av-nuevo .av-entradilla {
+  font-size: var(--av-t-20);
+  line-height: 1.5;
+}
+.av-nuevo .av-texto-2 {
+  color: var(--av-texto-2);
+}
+.av-nuevo .av-pequeno {
+  font-size: var(--av-t-14);
+}
+/* ======================================================================
+   FOCO
+   Visible al usar teclado. Envolver zonas oscuras con .av-sobre-oscuro para que sea
+   amarillo. Las clases .av-es-hover, .av-es-activo, .av-es-foco y .av-es-visitado solo sirven
+   para dibujar estados en la guía; no se usan en la web.
+   ====================================================================== */
+.av-nuevo :focus-visible,
+.av-nuevo .av-es-foco {
+  outline: var(--av-foco-ancho) solid var(--av-foco);
+  outline-offset: var(--av-foco-separacion);
+}
+.av-nuevo .av-sobre-oscuro :focus-visible,
+.av-nuevo .av-sobre-oscuro .av-es-foco {
+  outline-color: var(--av-foco-oscuro);
+}
+.av-nuevo .av-solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+/* ======================================================================
+   ICONOS
+   SVG en línea de trazo. Decorativo: aria-hidden="true". Con significado propio:
+   role="img" y aria-label.
+   ====================================================================== */
+.av-nuevo .av-ico {
+  width: var(--av-icono);
+  height: var(--av-icono);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
+}
+/* ======================================================================
+   BOTONES
+   <button class="av-btn av-btn-1">Hazte socio/a</button>
+   .av-btn-1 principal: uno por sección · .av-btn-2 secundario · .av-btn-3 texto ·
+   .av-btn-borrar destructivo. Extras: .av-btn-g .av-btn-icono .av-btn-ancho
+   Normal > hover > pulsado oscurecen. Cargando: aria-busy="true", .av-giro y un texto
+   que lo diga; evitar el doble envío desde JavaScript. Solo icono: aria-label.
+   El texto dice lo que pasa: "Donar 25 €", no "Enviar".
+   ====================================================================== */
+.av-nuevo .av-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--av-e-2);
+  min-height: var(--av-tactil);
+  padding: 0.625rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: var(--av-r-m);
+  font: var(--av-p-semi) var(--av-t-16)/1.2 var(--av-fuente);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--av-mov),
+    border-color var(--av-mov),
+    color var(--av-mov);
+}
+.av-nuevo .av-btn-1 {
+  background: var(--av-accion);
+  color: var(--av-sobre-accion);
+}
+.av-nuevo .av-btn-1:hover,
+.av-nuevo .av-btn-1.av-es-hover {
+  background: var(--av-accion-hover);
+}
+.av-nuevo .av-btn-1:active,
+.av-nuevo .av-btn-1.av-es-activo {
+  background: var(--av-accion-activa);
+}
+.av-nuevo .av-btn-2 {
+  background: var(--av-fondo);
+  color: var(--av-verde-700);
+  border-color: var(--av-verde-600);
+}
+.av-nuevo .av-btn-2:hover,
+.av-nuevo .av-btn-2.av-es-hover {
+  background: var(--av-suave-hover);
+  border-color: var(--av-verde-700);
+}
+.av-nuevo .av-btn-2:active,
+.av-nuevo .av-btn-2.av-es-activo {
+  background: var(--av-suave-activo);
+  border-color: var(--av-verde-800);
+  color: var(--av-verde-800);
+}
+.av-nuevo .av-btn-3 {
+  background: transparent;
+  color: var(--av-enlace);
+  padding-inline: 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.av-nuevo .av-btn-3:hover,
+.av-nuevo .av-btn-3.av-es-hover {
+  background: var(--av-suave-hover);
+}
+.av-nuevo .av-btn-3:active,
+.av-nuevo .av-btn-3.av-es-activo {
+  background: var(--av-suave-activo);
+  color: var(--av-verde-800);
+}
+.av-nuevo .av-sobre-oscuro .av-btn-2 {
+  background: transparent;
+  color: var(--av-texto-sobre-oscuro);
+  border-color: var(--av-texto-sobre-oscuro);
+}
+.av-nuevo .av-sobre-oscuro .av-btn-2:hover,
+.av-nuevo .av-sobre-oscuro .av-btn-2.av-es-hover {
+  background: var(--av-fondo);
+  color: var(--av-verde-800);
+}
+.av-nuevo .av-sobre-oscuro .av-btn-2:active,
+.av-nuevo .av-sobre-oscuro .av-btn-2.av-es-activo {
+  background: var(--av-suave-activo);
+  color: var(--av-verde-800);
+}
+.av-nuevo .av-btn-borrar {
+  background: var(--av-error);
+  color: var(--av-texto-sobre-oscuro);
+}
+.av-nuevo .av-btn-borrar:hover,
+.av-nuevo .av-btn-borrar.av-es-hover {
+  background: var(--av-peligro-hover);
+}
+.av-nuevo .av-btn-borrar:active,
+.av-nuevo .av-btn-borrar.av-es-activo {
+  background: var(--av-peligro-activo);
+}
+.av-nuevo .av-btn:disabled,
+.av-nuevo .av-btn.av-es-desactivado {
+  background: var(--av-apagado);
+  color: var(--av-apagado-texto);
+  border-color: transparent;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+.av-nuevo .av-btn-g {
+  min-height: var(--av-tactil-g);
+  padding-inline: 2rem;
+  font-size: var(--av-t-20);
+}
+.av-nuevo .av-btn-icono {
+  width: var(--av-tactil);
+  padding: 0;
+}
+.av-nuevo .av-btn-ancho {
+  width: 100%;
+}
+.av-nuevo .av-giro {
+  width: 20px;
+  height: 20px;
+  border: 3px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: av-giro 0.8s linear infinite;
+}
+@keyframes av-giro {
+  to {
+    transform: rotate(1turn);
+  }
+}
+/* ======================================================================
+   ENLACES
+   El enlace navega, el botón actúa. Siempre subrayado. Si sale de la web, icono y
+   texto accesible. Sin target="_blank" en enlaces internos (H3-01).
+   ====================================================================== */
+.av-nuevo .av-enlace {
+  color: var(--av-enlace);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: var(--av-p-medio);
+}
+.av-nuevo .av-enlace:hover,
+.av-nuevo .av-enlace.av-es-hover {
+  color: var(--av-enlace-hover);
+  text-decoration-thickness: 3px;
+}
+.av-nuevo .av-enlace:active,
+.av-nuevo .av-enlace.av-es-activo {
+  background: var(--av-suave-activo);
+}
+.av-nuevo .av-enlace:visited,
+.av-nuevo .av-enlace.av-es-visitado {
+  color: var(--av-enlace-visitado);
+}
+/* ======================================================================
+   CAMPOS
+   <div class="av-campo"><label class="av-etiqueta" for="x">…</label>
+   <input class="av-control" id="x" aria-describedby="x-ayuda"></div>
+   Etiqueta siempre visible; obligatorio con asterisco y required. Error:
+   aria-invalid="true", mensaje enlazado con aria-describedby y cómo corregirlo.
+   Añadir autocomplete en datos personales (A-14).
+   ====================================================================== */
+.av-nuevo .av-campo {
+  display: grid;
+  gap: var(--av-e-2);
+  align-content: start;
+  min-width: 0;
+}
+.av-nuevo .av-etiqueta {
+  font-weight: var(--av-p-semi);
+}
+.av-nuevo .av-oblig {
+  color: var(--av-error);
+}
+.av-nuevo .av-ayuda {
+  font-size: var(--av-t-14);
+  color: var(--av-texto-2);
+}
+.av-nuevo .av-control {
+  width: 100%;
+  min-height: var(--av-tactil);
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--av-campo-borde);
+  border-radius: var(--av-r-m);
+  background: var(--av-fondo);
+  color: var(--av-texto);
+  font: inherit;
+}
+.av-nuevo .av-control::placeholder {
+  color: var(--av-placeholder);
+  opacity: 1;
+}
+.av-nuevo .av-control:hover,
+.av-nuevo .av-control.av-es-hover {
+  border-color: var(--av-campo-borde-hover);
+}
+.av-nuevo .av-control:focus,
+.av-nuevo .av-control.av-es-foco {
+  border-color: var(--av-foco);
+  outline: 3px solid var(--av-foco);
+  outline-offset: 1px;
+}
+.av-nuevo .av-control[aria-invalid="true"] {
+  border: 2px solid var(--av-error);
+}
+.av-nuevo .av-control.av-es-valido {
+  border: 2px solid var(--av-exito);
+}
+.av-nuevo .av-control:disabled {
+  background: var(--av-apagado);
+  color: var(--av-apagado-texto);
+  border-color: transparent;
+  cursor: not-allowed;
+}
+.av-nuevo .av-control[readonly] {
+  background: var(--av-fondo-suave);
+  border-style: dashed;
+}
+.av-nuevo textarea.av-control {
+  min-height: 120px;
+  resize: vertical;
+}
+.av-nuevo select.av-control {
+  appearance: none;
+  padding-right: 2.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%232B2B2B' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 20px;
+}
+.av-nuevo .av-mensaje {
+  display: flex;
+  gap: var(--av-e-2);
+  align-items: flex-start;
+  font-size: var(--av-t-14);
+  font-weight: var(--av-p-medio);
+}
+.av-nuevo .av-mensaje.av-error {
+  color: var(--av-error);
+}
+.av-nuevo .av-mensaje.av-exito {
+  color: var(--av-exito);
+}
+/* ======================================================================
+   CASILLA, OPCIÓN E INTERRUPTOR
+   Toda la etiqueta es pulsable (48 px). Grupos dentro de fieldset con legend.
+   ====================================================================== */
+.av-nuevo .av-opcion {
+  display: flex;
+  gap: var(--av-e-3);
+  align-items: center;
+  min-height: var(--av-tactil);
+  cursor: pointer;
+}
+.av-nuevo .av-opcion input {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--av-seleccion);
+  flex: none;
+}
+.av-nuevo .av-opcion.av-desactivada {
+  color: var(--av-apagado-texto);
+  cursor: not-allowed;
+}
+.av-nuevo .av-interruptor input {
+  appearance: none;
+  width: 52px;
+  height: 30px;
+  border-radius: var(--av-r-total);
+  background: var(--av-campo-borde);
+  position: relative;
+  transition: background var(--av-mov);
+}
+.av-nuevo .av-interruptor input::after {
+  content: "";
+  position: absolute;
+  inset: 4px auto 4px 4px;
+  width: 22px;
+  border-radius: 50%;
+  background: var(--av-fondo);
+  transition: transform var(--av-mov);
+}
+.av-nuevo .av-interruptor input:checked {
+  background: var(--av-verde-600);
+}
+.av-nuevo .av-interruptor input:checked::after {
+  transform: translateX(22px);
+}
+.av-nuevo .av-interruptor input:disabled {
+  background: var(--av-apagado-control);
+}
+/* ======================================================================
+   IMPORTE DE DONACIÓN
+   Opciones radio con aspecto de botón; sigue funcionando con teclado.
+   ====================================================================== */
+.av-nuevo .av-importes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--av-e-3);
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.av-nuevo .av-importes legend {
+  font-weight: var(--av-p-semi);
+  margin-bottom: var(--av-e-2);
+}
+.av-nuevo .av-importe {
+  position: relative;
+}
+.av-nuevo .av-importe input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+.av-nuevo .av-importe span {
+  display: grid;
+  place-items: center;
+  min-width: 96px;
+  min-height: var(--av-tactil-g);
+  padding: 0 var(--av-e-4);
+  border: 2px solid var(--av-campo-borde);
+  border-radius: var(--av-r-m);
+  font-size: var(--av-t-20);
+  font-weight: var(--av-p-semi);
+}
+.av-nuevo .av-importe:hover span {
+  border-color: var(--av-campo-borde-hover);
+  background: var(--av-suave-hover);
+}
+.av-nuevo .av-importe input:checked + span {
+  border-color: var(--av-verde-600);
+  background: var(--av-suave-activo);
+  color: var(--av-verde-800);
+  box-shadow: inset 0 0 0 1px var(--av-verde-600);
+}
+.av-nuevo .av-importe input:focus-visible + span {
+  outline: var(--av-foco-ancho) solid var(--av-foco);
+  outline-offset: var(--av-foco-separacion);
+}
+.av-nuevo .av-importe input:disabled + span {
+  background: var(--av-apagado);
+  border-color: transparent;
+  color: var(--av-apagado-texto);
+}
+/* ======================================================================
+   MENSAJES
+   .av-aviso + .av-a-error | .av-a-exito | .av-a-aviso | .av-a-info, con icono y texto.
+   Si aparece tras cargar: role="alert" (error) o role="status" (resto).
+   ====================================================================== */
+.av-nuevo .av-aviso {
+  display: flex;
+  gap: var(--av-e-3);
+  padding: var(--av-e-4);
+  border-radius: var(--av-r-m);
+  border: 1px solid;
+  align-items: flex-start;
+}
+.av-nuevo .av-aviso .av-ico {
+  margin-top: 3px;
+}
+.av-nuevo .av-aviso p {
+  color: var(--av-texto);
+}
+.av-nuevo .av-a-error {
+  background: var(--av-error-fondo);
+  color: var(--av-error);
+}
+.av-nuevo .av-a-exito {
+  background: var(--av-exito-fondo);
+  color: var(--av-exito);
+}
+.av-nuevo .av-a-aviso {
+  background: var(--av-aviso-fondo);
+  color: var(--av-aviso);
+}
+.av-nuevo .av-a-info {
+  background: var(--av-info-fondo);
+  color: var(--av-info);
+}
+.av-nuevo .av-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.75rem;
+  border-radius: var(--av-r-total);
+  font-size: var(--av-t-14);
+  font-weight: var(--av-p-semi);
+  background: var(--av-suave-activo);
+  color: var(--av-verde-800);
+}
+.av-nuevo .av-chip.av-gris {
+  background: var(--av-apagado);
+  color: var(--av-texto);
+}
+.av-nuevo .av-chip.av-amarillo {
+  background: var(--av-amarillo);
+  color: var(--av-texto);
+}
+/* ======================================================================
+   TARJETAS
+   .av-tarjeta base · .av-tarjeta-enlace si toda es pulsable (un solo enlace) ·
+   .av-t-color con .av-t-oliva, .av-t-hoja o .av-t-verde: texto oscuro, nunca blanco.
+   ====================================================================== */
+.av-nuevo .av-tarjeta {
+  background: var(--av-fondo);
+  border: 1px solid var(--av-linea);
+  border-radius: var(--av-r-m);
+  padding: var(--av-e-5);
+  display: grid;
+  gap: var(--av-e-3);
+  align-content: start;
+  min-width: 0;
+}
+.av-nuevo .av-tarjeta-enlace {
+  color: inherit;
+  text-decoration: none;
+  transition:
+    box-shadow var(--av-mov),
+    border-color var(--av-mov);
+}
+.av-nuevo .av-tarjeta-enlace:hover,
+.av-nuevo .av-tarjeta-enlace.av-es-hover {
+  box-shadow: var(--av-sombra-2);
+  border-color: var(--av-verde-600);
+}
+.av-nuevo .av-tarjeta-enlace:active,
+.av-nuevo .av-tarjeta-enlace.av-es-activo {
+  background: var(--av-suave-hover);
+  box-shadow: none;
+  border-color: var(--av-verde-800);
+}
+.av-nuevo .av-tarjeta-enlace .av-mas {
+  color: var(--av-enlace);
+  font-weight: var(--av-p-semi);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.av-nuevo .av-t-color {
+  border: 0;
+  justify-items: center;
+  text-align: center;
+}
+.av-nuevo .av-t-oliva {
+  background: var(--av-oliva);
+}
+.av-nuevo .av-t-hoja {
+  background: var(--av-verde-hoja);
+}
+.av-nuevo .av-t-verde {
+  background: var(--av-verde);
+}
+.av-nuevo .av-t-color .av-ico {
+  width: 48px;
+  height: 48px;
+}
+.av-nuevo .av-t-color .av-btn {
+  background: var(--av-fondo);
+  color: var(--av-verde-800);
+}
+.av-nuevo .av-t-color .av-btn:hover {
+  background: var(--av-suave-hover);
+}
+.av-nuevo .av-cita {
+  font-style: normal;
+  margin: 0;
+}
+.av-nuevo .av-persona {
+  display: flex;
+  gap: var(--av-e-3);
+  align-items: center;
+}
+.av-nuevo .av-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--av-suave-activo);
+  display: grid;
+  place-items: center;
+  font-weight: var(--av-p-negrita);
+  color: var(--av-verde-800);
+  flex: none;
+}
+.av-nuevo .av-resumen {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--av-e-4);
+  flex-wrap: wrap;
+  padding: var(--av-e-4) var(--av-e-5);
+  border: 1px solid var(--av-linea);
+  border-radius: var(--av-r-m);
+  background: var(--av-suave-hover);
+  font-weight: var(--av-p-negrita);
+}
+/* ======================================================================
+   NAVEGACIÓN
+   .av-cabecera clara, o .av-oscura junto a .av-sobre-oscuro sobre foto o banda. Página actual:
+   aria-current="page". Menú móvil opaco, filas de 48 px. Idioma en texto.
+   ====================================================================== */
+.av-nuevo .av-cabecera {
+  display: flex;
+  align-items: center;
+  gap: var(--av-e-5);
+  padding: var(--av-e-3) var(--av-e-5);
+  background: var(--av-fondo);
+  border-bottom: 1px solid var(--av-linea);
+}
+.av-nuevo .av-cabecera.av-oscura {
+  background: var(--av-fondo-oscuro);
+  border: 0;
+}
+.av-nuevo .av-cabecera .av-logo {
+  width: 150px;
+  flex: none;
+}
+.av-nuevo .av-cabecera nav {
+  flex: 1;
+}
+.av-nuevo .av-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--av-e-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.av-nuevo .av-menu a {
+  display: flex;
+  align-items: center;
+  min-height: var(--av-tactil);
+  padding: 0 var(--av-e-3);
+  color: var(--av-texto);
+  font-weight: var(--av-p-semi);
+  font-size: var(--av-t-16);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+.av-nuevo .av-menu a:hover,
+.av-nuevo .av-menu a.av-es-hover {
+  color: var(--av-verde-700);
+  background: var(--av-suave-hover);
+}
+.av-nuevo .av-menu a:active,
+.av-nuevo .av-menu a.av-es-activo {
+  background: var(--av-suave-activo);
+}
+.av-nuevo .av-menu a[aria-current] {
+  border-color: var(--av-verde-600);
+  color: var(--av-verde-700);
+}
+.av-nuevo .av-oscura .av-menu a {
+  color: var(--av-texto-sobre-oscuro);
+}
+.av-nuevo .av-oscura .av-menu a:hover,
+.av-nuevo .av-oscura .av-menu a.av-es-hover {
+  background: var(--av-verde-850);
+  color: var(--av-amarillo);
+}
+.av-nuevo .av-oscura .av-menu a[aria-current] {
+  color: var(--av-amarillo);
+  border-color: var(--av-amarillo);
+}
+.av-nuevo .av-idioma {
+  display: flex;
+  font-weight: var(--av-p-semi);
+}
+.av-nuevo .av-idioma a {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--av-texto);
+  text-decoration: none;
+}
+.av-nuevo .av-idioma a:hover {
+  text-decoration: underline;
+}
+.av-nuevo .av-idioma a[aria-current] {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+.av-nuevo .av-oscura .av-idioma a {
+  color: var(--av-texto-sobre-oscuro);
+}
+.av-nuevo .av-desplegable {
+  max-width: 280px;
+  background: var(--av-fondo);
+  border: 1px solid var(--av-linea);
+  border-radius: var(--av-r-m);
+  box-shadow: var(--av-sombra-2);
+  list-style: none;
+  margin: 0;
+  padding: var(--av-e-2);
+}
+.av-nuevo .av-desplegable a {
+  display: flex;
+  align-items: center;
+  min-height: var(--av-tactil);
+  padding: 0 var(--av-e-4);
+  border-radius: var(--av-r-s);
+  color: var(--av-texto);
+  text-decoration: none;
+}
+.av-nuevo .av-desplegable a:hover,
+.av-nuevo .av-desplegable a.av-es-hover {
+  background: var(--av-suave-hover);
+  color: var(--av-verde-700);
+}
+.av-nuevo .av-desplegable a[aria-current] {
+  background: var(--av-suave-activo);
+  color: var(--av-verde-800);
+  font-weight: var(--av-p-semi);
+}
+.av-nuevo .av-movil {
+  max-width: 375px;
+  border: 1px solid var(--av-linea);
+  border-radius: var(--av-r-m);
+  overflow: hidden;
+}
+.av-nuevo .av-movil .av-cabecera {
+  justify-content: space-between;
+  gap: var(--av-e-2);
+  padding: var(--av-e-2) var(--av-e-3);
+}
+.av-nuevo .av-movil .av-logo {
+  width: 112px;
+}
+.av-nuevo .av-movil summary,
+.av-nuevo .av-movil .av-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: var(--av-tactil);
+  padding: 0 var(--av-e-4);
+  border-top: 1px solid var(--av-linea);
+  font-weight: var(--av-p-semi);
+  color: var(--av-texto);
+  text-decoration: none;
+  list-style: none;
+  cursor: pointer;
+}
+.av-nuevo .av-movil .av-fila.av-hija {
+  padding-left: var(--av-e-6);
+  font-weight: var(--av-p-normal);
+  background: var(--av-fondo-suave);
+}
+.av-nuevo .av-movil .av-pie-menu {
+  padding: var(--av-e-4);
+  display: grid;
+  gap: var(--av-e-3);
+  border-top: 1px solid var(--av-linea);
+}
+:where(.av-nuevo) summary::-webkit-details-marker {
+  display: none;
+}
+.av-nuevo summary .av-ico {
+  transition: transform var(--av-mov);
+}
+.av-nuevo details[open] > summary .av-ico {
+  transform: rotate(180deg);
+}
+.av-nuevo .av-migas ol,
+.av-nuevo .av-paginas {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--av-e-2);
+  align-items: center;
+}
+.av-nuevo .av-migas li + li::before {
+  content: "/";
+  margin-right: var(--av-e-2);
+  color: var(--av-texto-2);
+}
+.av-nuevo .av-migas a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+.av-nuevo .av-paginas a,
+.av-nuevo .av-paginas span {
+  display: grid;
+  place-items: center;
+  min-width: var(--av-tactil);
+  min-height: var(--av-tactil);
+  border-radius: var(--av-r-m);
+  border: 1px solid var(--av-campo-borde);
+  color: var(--av-texto);
+  text-decoration: none;
+  font-weight: var(--av-p-semi);
+}
+.av-nuevo .av-paginas a:hover {
+  background: var(--av-suave-hover);
+}
+.av-nuevo .av-paginas a[aria-current] {
+  background: var(--av-accion);
+  color: var(--av-sobre-accion);
+  border-color: transparent;
+}
+.av-nuevo .av-paginas span {
+  background: var(--av-apagado);
+  color: var(--av-apagado-texto);
+  border-color: transparent;
+}
+.av-nuevo .av-salto {
+  display: inline-block;
+  padding: var(--av-e-3) var(--av-e-4);
+  background: var(--av-fondo-oscuro);
+  color: var(--av-texto-sobre-oscuro);
+  border-radius: var(--av-r-s);
+  font-weight: var(--av-p-semi);
+}
+/* ======================================================================
+   CONTENIDO
+   Acordeón: details/summary nativo. Pestañas: role="tablist" y flechas (JavaScript).
+   Tabla: dentro de .av-tabla-caja con tabindex="0" y nombre. Carrusel sin avance
+   automático. Vídeo: no cargar el externo hasta pulsar.
+   ====================================================================== */
+.av-nuevo .av-acordeon {
+  border: 1px solid var(--av-linea);
+  border-radius: var(--av-r-m);
+  background: var(--av-fondo);
+}
+.av-nuevo .av-acordeon + .av-acordeon {
+  margin-top: var(--av-e-2);
+}
+.av-nuevo .av-acordeon summary {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--av-e-4);
+  align-items: center;
+  min-height: var(--av-tactil-g);
+  padding: var(--av-e-3) var(--av-e-5);
+  font-weight: var(--av-p-semi);
+  cursor: pointer;
+  border-radius: var(--av-r-m);
+  list-style: none;
+}
+.av-nuevo .av-acordeon summary:hover,
+.av-nuevo .av-acordeon summary.av-es-hover {
+  background: var(--av-suave-hover);
+  color: var(--av-verde-700);
+}
+.av-nuevo .av-acordeon > div {
+  padding: 0 var(--av-e-5) var(--av-e-5);
+}
+.av-nuevo .av-pestanas {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--av-campo-borde);
+}
+.av-nuevo .av-pestanas button {
+  min-height: var(--av-tactil);
+  padding: 0 var(--av-e-5);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: none;
+  font: var(--av-p-semi) var(--av-t-16) var(--av-fuente);
+  color: var(--av-texto-2);
+  cursor: pointer;
+}
+.av-nuevo .av-pestanas button:hover {
+  background: var(--av-suave-hover);
+  color: var(--av-verde-700);
+}
+.av-nuevo .av-pestanas button[aria-selected="true"] {
+  border-color: var(--av-verde-600);
+  color: var(--av-verde-700);
+}
+.av-nuevo .av-tabla-caja {
+  overflow-x: auto;
+  border: 1px solid var(--av-linea);
+  border-radius: var(--av-r-m);
+}
+.av-nuevo .av-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+.av-nuevo .av-tabla th,
+.av-nuevo .av-tabla td {
+  text-align: left;
+  padding: var(--av-e-3) var(--av-e-4);
+  border-bottom: 1px solid var(--av-linea);
+  vertical-align: top;
+}
+.av-nuevo .av-tabla thead th {
+  background: var(--av-suave-hover);
+  font-weight: var(--av-p-semi);
+}
+.av-nuevo .av-tabla tbody tr:hover {
+  background: var(--av-fondo-suave);
+}
+.av-nuevo .av-tabla tr:last-child td {
+  border-bottom: 0;
+}
+.av-nuevo .av-pasos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--av-e-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.av-nuevo .av-pasos li {
+  display: flex;
+  gap: var(--av-e-2);
+  align-items: center;
+  font-weight: var(--av-p-medio);
+  color: var(--av-texto-2);
+}
+.av-nuevo .av-pasos b {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--av-campo-borde);
+}
+.av-nuevo .av-pasos .av-hecho b {
+  background: var(--av-suave-activo);
+  border-color: var(--av-verde-600);
+  color: var(--av-verde-800);
+}
+.av-nuevo .av-pasos [aria-current] {
+  color: var(--av-texto);
+  font-weight: var(--av-p-negrita);
+}
+.av-nuevo .av-pasos [aria-current] b {
+  background: var(--av-accion);
+  color: var(--av-sobre-accion);
+  border-color: transparent;
+}
+.av-nuevo .av-barra {
+  width: 100%;
+  height: 12px;
+  accent-color: var(--av-seleccion);
+}
+.av-nuevo .av-esqueleto {
+  display: grid;
+  gap: var(--av-e-3);
+}
+.av-nuevo .av-esqueleto i {
+  height: 16px;
+  border-radius: var(--av-r-s);
+  background: var(--av-apagado);
+  animation: av-lat 1.4s ease-in-out infinite;
+}
+.av-nuevo .av-esqueleto i:last-child {
+  width: 60%;
+}
+@keyframes av-lat {
+  50% {
+    opacity: 0.5;
+  }
+}
+.av-nuevo .av-hero {
+  position: relative;
+  display: grid;
+  gap: var(--av-e-4);
+  align-content: center;
+  justify-items: start;
+  min-height: 380px;
+  padding: var(--av-e-7) var(--av-e-6);
+  color: var(--av-texto-sobre-oscuro);
+  border-radius: var(--av-r-m);
+  background: var(--av-hero-fondo);
+}
+.av-nuevo .av-hero .av-titulo-hero {
+  color: var(--av-titulo-sobre-oscuro);
+}
+.av-nuevo .av-hero p {
+  max-width: 48ch;
+}
+.av-nuevo .av-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--av-e-3);
+  align-items: center;
+}
+.av-nuevo .av-cifras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--av-e-5);
+  padding: var(--av-e-6);
+  border-radius: var(--av-r-m);
+  background: var(--av-fondo-oscuro);
+  color: var(--av-texto-sobre-oscuro);
+  text-align: center;
+}
+.av-nuevo .av-cifras b {
+  display: block;
+  font-size: var(--av-t-50);
+  color: var(--av-amarillo);
+  line-height: 1.1;
+}
+.av-nuevo .av-subrayado {
+  display: inline-block;
+  border-bottom: 4px solid var(--av-oliva);
+  padding-bottom: var(--av-e-1);
+}
+.av-nuevo .av-pie {
+  background: var(--av-negro);
+  color: var(--av-texto-sobre-oscuro);
+  padding: var(--av-e-6);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--av-e-6);
+  border-radius: var(--av-r-m);
+}
+.av-nuevo .av-pie h3 {
+  color: var(--av-amarillo);
+  font-size: var(--av-t-16);
+}
+.av-nuevo .av-pie a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--av-texto-sobre-oscuro);
+}
+.av-nuevo .av-pie a:hover {
+  color: var(--av-amarillo);
+}
+.av-nuevo .av-pie img {
+  width: 180px;
+}
+.av-nuevo .av-descarga {
+  display: flex;
+  align-items: center;
+  gap: var(--av-e-4);
+  padding: var(--av-e-4);
+  border: 1px solid var(--av-linea);
+  border-radius: var(--av-r-m);
+  color: var(--av-texto);
+  text-decoration: none;
+}
+.av-nuevo .av-descarga:hover {
+  border-color: var(--av-verde-600);
+  background: var(--av-suave-hover);
+}
+.av-nuevo .av-descarga span {
+  flex: 1;
+}
+.av-nuevo .av-descarga u {
+  text-underline-offset: 3px;
+  color: var(--av-enlace);
+}
+.av-nuevo .av-video {
+  display: grid;
+  place-items: center;
+  gap: var(--av-e-3);
+  min-height: 220px;
+  padding: var(--av-e-5);
+  border-radius: var(--av-r-m);
+  background: var(--av-fondo-oscuro);
+  color: var(--av-texto-sobre-oscuro);
+  text-align: center;
+}
+.av-nuevo .av-vacio {
+  display: grid;
+  justify-items: center;
+  gap: var(--av-e-4);
+  text-align: center;
+  padding: var(--av-e-7) var(--av-e-5);
+  border: 2px dashed var(--av-linea);
+  border-radius: var(--av-r-m);
+}
+.av-nuevo .av-galletas {
+  display: grid;
+  gap: var(--av-e-4);
+  padding: var(--av-e-5);
+  max-width: 560px;
+  border-radius: var(--av-r-m);
+  box-shadow: var(--av-sombra-2);
+  background: var(--av-fondo);
+  border: 1px solid var(--av-linea);
+}
+.av-nuevo .av-controles {
+  display: flex;
+  gap: var(--av-e-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+/* ======================================================================
+   DIÁLOGO
+   Elemento nativo <dialog> abierto con showModal(): contiene el foco, cierra con Esc
+   y devuelve el foco (A-02, A-03). Ponerle aria-labelledby.
+   ====================================================================== */
+:where(.av-nuevo) dialog {
+  border: 0;
+  border-radius: var(--av-r-m);
+  padding: 0;
+  max-width: min(560px, calc(100vw - 32px));
+  box-shadow: var(--av-sombra-2);
+  color: inherit;
+}
+:where(.av-nuevo) dialog::backdrop {
+  background: var(--av-velo);
+}
+.av-nuevo .av-dialogo {
+  padding: var(--av-e-5);
+  display: grid;
+  gap: var(--av-e-5);
+}
+.av-nuevo .av-dialogo-cab {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--av-e-4);
+  align-items: center;
+}
+.av-nuevo .av-notif {
+  display: inline-flex;
+  gap: var(--av-e-3);
+  align-items: center;
+  padding: var(--av-e-3) var(--av-e-4);
+  border-radius: var(--av-r-m);
+  background: var(--av-fondo-oscuro);
+  color: var(--av-texto-sobre-oscuro);
+  box-shadow: var(--av-sombra-2);
+}
+.av-nuevo .av-pista {
+  display: inline-block;
+  padding: var(--av-e-2) var(--av-e-3);
+  border-radius: var(--av-r-s);
+  background: var(--av-texto);
+  color: var(--av-texto-sobre-oscuro);
+  font-size: var(--av-t-14);
+}
+/* ======================================================================
+   MENOS MOVIMIENTO
+   Respeta la preferencia del sistema.
+   ====================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :where(.av-nuevo) *,
+  :where(.av-nuevo) *::before,
+  :where(.av-nuevo) *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* ======================================================================
+   SOBRE OSCURO Y AJUSTES
+   Botón principal sobre oscuro: verde de marca con texto oscuro.
+   ====================================================================== */
+.av-nuevo .av-sobre-oscuro .av-btn-1:not(:disabled) {
+  background: var(--av-accion-oscuro);
+  color: var(--av-sobre-accion-oscuro);
+}
+.av-nuevo .av-sobre-oscuro .av-btn-1:not(:disabled):hover,
+.av-nuevo .av-sobre-oscuro .av-btn-1.av-es-hover:not(:disabled) {
+  background: var(--av-accion-oscuro-hover);
+}
+.av-nuevo .av-sobre-oscuro .av-btn-1:not(:disabled):active,
+.av-nuevo .av-sobre-oscuro .av-btn-1.av-es-activo:not(:disabled) {
+  background: var(--av-accion-oscuro-activa);
+}
+.av-nuevo .av-chip {
+  justify-self: start;
+}
+.av-nuevo .av-paginas a,
+.av-nuevo .av-paginas span {
+  padding-inline: var(--av-e-3);
+}
+.av-nuevo .av-pestanas + [role="tabpanel"],
+:where(.av-nuevo) [role="tabpanel"] {
+  padding-top: var(--av-e-4);
+}
+.av-nuevo .av-opcion input[aria-invalid="true"] {
+  outline: 2px solid var(--av-error);
+  outline-offset: 1px;
+}
+.av-nuevo .av-opcion input[aria-invalid="true"]:focus-visible {
+  outline: var(--av-foco-ancho) solid var(--av-foco);
+  outline-offset: var(--av-foco-separacion);
+}
+/* ======================================================================
+   TESTIMONIO
+   <figure class="av-tarjeta av-testimonio"> figcaption (persona) y blockquote.
+   La persona va primero: se sabe quién habla antes de leer. Móvil: encima.
+   Desde 768 px: persona a la izquierda y texto a la derecha.
+   ====================================================================== */
+.av-nuevo .av-testimonio {
+  margin: 0;
+  gap: var(--av-e-4);
+}
+.av-nuevo .av-testimonio .av-cita {
+  display: grid;
+  gap: var(--av-e-3);
+  max-width: var(--av-medida);
+}
+@media (min-width: 768px) {
+  .av-nuevo .av-testimonio {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: var(--av-e-6);
+    align-items: start;
+  }
+  .av-nuevo .av-testimonio .av-persona {
+    align-items: flex-start;
+  }
+}

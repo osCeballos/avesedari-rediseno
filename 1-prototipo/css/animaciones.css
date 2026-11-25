@@ -1,0 +1,111 @@
+/* ==========================================================================
+   ANIMACIONES · HOME
+   Solo actúan con html.anim, clase que se pone si hay JavaScript y el usuario
+   no pide menos movimiento. Sin ella todo se ve en su estado final.
+   .v = la sección ya ha entrado en pantalla (una sola vez).
+   Reglas: solo transform, opacity, clip-path y trazo · sin bucles · sin mover
+   párrafos largos · el texto del hero nunca se oculta · nada cambia de tamaño
+   en el flujo (CLS 0).
+   ========================================================================== */
+@property --luz { syntax: "<percentage>"; inherits: true; initial-value: 130%; }
+
+/* 0 · CABECERA: vuelve al subir; se aparta al bajar */
+html { scroll-padding-top: 104px; }
+.p-inicio .w-cab.fija { position: fixed; z-index: 20; inset: 0 0 auto; width: 100%; max-width: none; padding-block: var(--av-e-2); padding-inline: max(20px, (100% - 1200px) / 2); background: rgb(16 24 10 / 0.96); box-shadow: var(--av-sombra-2); }
+.anim .w-cab.fija { animation: cab-entra var(--av-dur-s) var(--av-curva); }
+@keyframes cab-entra { from { transform: translateY(-100%); } }
+.anim .w-sub details[open] > ul { animation: menu-abre var(--av-dur-s) var(--av-curva); }
+.anim .w-cab nav.abierto { animation: menu-abre var(--av-dur-s) var(--av-curva); }
+@keyframes menu-abre { from { opacity: 0; transform: translateY(-8px); } }
+
+/* 1 · HERO: la linterna enciende la escena */
+.anim .h-hero picture::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at var(--fx, 53%) var(--fy, 34%), transparent var(--luz), rgb(5 9 12 / 0.93) calc(var(--luz) + 26%)); animation: linterna calc(1500ms * var(--av-ritmo)) cubic-bezier(0.35, 0, 0.15, 1) 150ms both; }
+@keyframes linterna { 0% { --luz: -26%; } 18% { --luz: 3%; } 26% { --luz: -4%; } 38% { --luz: 8%; } 100% { --luz: 130%; } }
+.anim .h-hero h1 { animation: sube var(--av-dur-l) var(--av-curva) both; }
+.anim .h-hero p { animation: sube var(--av-dur-l) var(--av-curva) calc(var(--av-paso) * 1) both; }
+.anim .h-hero .h-w > a { animation: sube var(--av-dur-l) var(--av-curva) calc(var(--av-paso) * 2) both; }
+@keyframes sube { from { transform: translateY(26px); } }
+
+/* 2 · TARJETAS: se posan sobre la foto una tras otra; el anillo se abre */
+.anim .h-card { transition: transform var(--av-dur-m) var(--av-curva), opacity var(--av-dur-m); }
+.anim .h-cards:not(.v) .h-card { transform: translateY(56px); opacity: 0; }
+.anim .h-card:nth-child(2) { transition-delay: var(--av-paso); }
+.anim .h-card:nth-child(3) { transition-delay: calc(var(--av-paso) * 2); }
+.anim .h-cards:not(.v) .h-card::after { transform: scale(0.2); }
+.anim .h-card::after { transition: transform var(--av-dur-l) var(--av-curva) 250ms; }
+.anim .h-card:hover::after { transition: transform 300ms var(--av-curva); }
+.anim .h-card .av-ico { transform-origin: 50% 60%; }
+.anim .h-card:hover > div > .av-ico { animation: late calc(480ms * var(--av-ritmo)) var(--av-curva); }
+@keyframes late { 35% { transform: scale(1.18); } 65% { transform: scale(0.96); } }
+
+/* 3 · PRESIDENTA: el anillo del logo llega rodando y se posa */
+.anim .h-retrato { transition: transform var(--av-dur-l) var(--av-curva); }
+.anim .h-pres:not(.v) .h-retrato { transform: scale(0.9); }
+.anim .h-retrato img { transition: translate var(--av-dur-l) var(--av-curva) var(--av-paso), opacity var(--av-dur-m); }
+.anim .h-pres:not(.v) .h-retrato img { translate: 0 10%; opacity: 0; }
+.anim .h-retrato::before { transition: transform calc(1100ms * var(--av-ritmo)) cubic-bezier(0.25, 0.9, 0.3, 1.12) calc(var(--av-paso) * 2), opacity var(--av-dur-s) calc(var(--av-paso) * 2); }
+.anim .h-pres:not(.v) .h-retrato::before { transform: translate(-260%, 60%) scale(0.5); opacity: 0; }
+.anim .h-pres figure, .anim .h-pres .h-txt > p, .anim .h-pres .h-txt > a { transition: opacity var(--av-dur-m), transform var(--av-dur-m) var(--av-curva); }
+.anim .h-pres:not(.v) figure, .anim .h-pres:not(.v) .h-txt > p, .anim .h-pres:not(.v) .h-txt > a { opacity: 0; transform: translateY(18px); }
+.anim .h-pres .h-txt > p { transition-delay: calc(var(--av-paso) * 2); }
+.anim .h-pres .h-txt > a { transition-delay: calc(var(--av-paso) * 3); }
+
+/* 4 · QUÉ HACEMOS: la foto se abre como una página y asoma el verde */
+.anim .h-foto img { transition: clip-path var(--av-dur-l) var(--av-curva); clip-path: inset(0 round 20px); }
+.anim .h-est:not(.v) .h-foto img { clip-path: inset(0 0 0 100% round 20px); }
+.anim .h-foto::before { transition: transform var(--av-dur-l) var(--av-curva) calc(var(--av-paso) * 4); }
+.anim .h-est:not(.v) .h-foto::before { transform: translate(28px, -28px); opacity: 0; }
+.anim .h-est .h-txt > h2 { transition: transform var(--av-dur-m) var(--av-curva), opacity var(--av-dur-m); }
+.anim .h-est:not(.v) .h-txt > h2 { transform: translateY(22px); opacity: 0; }
+
+/* 5 · CIFRAS: suben desde su línea; el valor es siempre el final (H1-05) */
+.anim .h-cif dd { clip-path: inset(-12% -10% -6% -4%); }
+.anim .h-cif .n { display: inline-block; transition: transform var(--av-dur-l) var(--av-curva); transition-delay: calc(var(--i, 0) * var(--av-paso) * 1.6); }
+.anim .h-cif:not(.v) .n { transform: translateY(125%); }
+.anim .h-cif i { display: inline-block; transition: transform var(--av-dur-m) cubic-bezier(0.3, 1.5, 0.5, 1); transition-delay: calc(var(--i, 0) * var(--av-paso) * 1.6 + 420ms * var(--av-ritmo)); }
+.anim .h-cif:not(.v) i { transform: scale(0) rotate(-90deg); }
+
+/* 6 · TESTIMONIOS: el trazo se dibuja a mano; al elegir, cambia la voz */
+.anim .h-trazo path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset var(--av-dur-l) ease-in-out 200ms; }
+.anim .h-tes:not(.v) .h-trazo path { stroke-dashoffset: 1; }
+.anim .h-lista button { transition: background var(--av-dur-s), opacity var(--av-dur-m), transform var(--av-dur-m) var(--av-curva); }
+.anim .h-tes:not(.v) .h-lista button { opacity: 0; transform: translateX(-20px); }
+.anim .h-tes.entra .h-lista button:nth-child(2) { transition-delay: var(--av-paso); }
+.anim .h-tes.entra .h-lista button:nth-child(3) { transition-delay: calc(var(--av-paso) * 2); }
+.anim .h-lista img { transition: border-color var(--av-dur-s), transform var(--av-dur-s) var(--av-curva); }
+.anim .h-lista [aria-selected="true"] img { transform: scale(1.05); }
+.anim .h-panel.cambia blockquote { animation: voz calc(320ms * var(--av-ritmo)) var(--av-curva); }
+.anim .h-panel.cambia::before { animation: comilla calc(420ms * var(--av-ritmo)) cubic-bezier(0.3, 1.5, 0.5, 1); transform-origin: 20% 40%; }
+@keyframes voz { from { opacity: 0; transform: translateX(16px); } }
+@keyframes comilla { from { transform: scale(0.5); opacity: 0; } }
+
+/* 7 · VÍDEO: se acerca y el botón invita con dos ondas, no más */
+.anim .h-vid .av-video { transition: transform var(--av-dur-l) var(--av-curva); }
+.anim .h-vid:not(.v) .av-video { transform: scale(0.92) translateY(30px); }
+.anim .h-vid button::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 3px solid var(--av-verde-600); opacity: 0; }
+.anim .h-vid.v button::after { animation: onda calc(1200ms * var(--av-ritmo)) ease-out 700ms 2; }
+@keyframes onda { from { opacity: 0.8; transform: scale(1); } to { opacity: 0; transform: scale(1.7); } }
+
+/* 8 · ENTIDADES: aparecen en orden, sin carrusel */
+.anim .h-log li { transition: opacity var(--av-dur-m), transform var(--av-dur-m) var(--av-curva); transition-delay: calc(var(--i, 0) * var(--av-paso) * 0.8); }
+.anim .h-log:not(.v) li { opacity: 0; transform: scale(0.88); }
+
+/* 9 · CIERRE: título y botón se encuentran */
+.anim .h-cta h2, .anim .h-cta a { transition: transform var(--av-dur-m) var(--av-curva), opacity var(--av-dur-m), background var(--av-mov); }
+.anim .h-cta:not(.v) h2 { transform: translateX(-28px); opacity: 0; }
+.anim .h-cta:not(.v) a { transform: translateX(28px); opacity: 0; }
+
+/* GLOBAL · botones: ceden al pulsar */
+.anim .av-btn:active:not(:disabled) { transform: scale(0.97); }
+.anim .av-btn .av-ico { transition: transform var(--av-mov); }
+.anim a.av-btn:hover .av-ico { transform: translateX(4px); }
+
+@media (max-width: 1199px) { .h-hero picture { --fx: 48%; --fy: 30%; } }
+@media (max-width: 599px) { .h-hero picture { --fx: 43%; --fy: 28%; } }
+@media (max-width: 639px) { .anim .h-cards:not(.v) .h-card { transform: translateY(32px); } .anim .h-cta:not(.v) h2, .anim .h-cta:not(.v) a { transform: translateY(18px); } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .h-panel.cambia blockquote { animation: none; } }
+@media print { .anim * { transition: none !important; animation: none !important; } }
+/* Solo revisión del prototipo */
+.sin-t .h-cards *, .sin-t .h-cards *::after, .sin-t .h-pres *, .sin-t .h-pres *::before, .sin-t .h-est *, .sin-t .h-est *::before, .sin-t .h-cif *, .sin-t .h-tes *, .sin-t .h-vid *, .sin-t .h-log *, .sin-t .h-cta * { transition: none !important; }
+.w-ctrl.rev { position: fixed; z-index: 30; left: 12px; bottom: 12px; border-radius: 12px; box-shadow: var(--av-sombra-2); }
+.w-ctrl.rev button { font: inherit; font-weight: 600; min-height: 36px; padding: 0 12px; border: 2px solid #8a5a00; border-radius: 8px; background: #fff; color: #2b2b2b; cursor: pointer; }
